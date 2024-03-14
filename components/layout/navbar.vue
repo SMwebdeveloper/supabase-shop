@@ -8,11 +8,19 @@ const isOpen = ref(false);
     <div
       class="max-w-[1200px] w-full mx-auto px-6 lg:px-0 flex items-center justify-between"
     >
-      <NuxtLink to="/">
+      <NuxtLink to="/" class="hidden md:flex">
         <h2 class="text-3xl font-semibold text-slate-700 dark:text-slate-50">
           Supabase<span class="font-bold text-sky-500">Shop</span>
         </h2>
       </NuxtLink>
+      <UInput
+        icon="i-heroicons-magnifying-glass-20-solid"
+        size="sm"
+        color="blue"
+        trailing
+        placeholder="Search..."
+        class="w-[70%] md:w-[40%]"
+      />
       <div class="hidden lg:flex items-center justify-center space-x-2">
         <SharedColorMode />
         <NuxtLink to="/profile">Profile</NuxtLink>
@@ -67,7 +75,7 @@ const isOpen = ref(false);
                 variant="link"
                 label="Profile"
                 @click="isOpen = false"
-                class="p-0 text-xl "
+                class="p-0 text-xl"
               />
             </NuxtLink>
             <NuxtLink to="/auth">
