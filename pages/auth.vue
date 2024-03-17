@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 
+useHead({title:'Supabase-shop | Auth'})
 const registerPage = ref(false)
 const state = reactive({
     email: undefined,
