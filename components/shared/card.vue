@@ -4,7 +4,8 @@
                 <NuxtImg src="/img.jpg" class="w-full h-[200px] md:h-[300px] rounded-t-lg object-cover"/>
             </header>
             <div class="py-3">
-                <h2 class="text-sm mb-2 inline-block">Lorem ipsum dolor sit, amet consectetur. binas yana dnd</h2>
+                <h2 class="text-2xl font-semibold text-slate-800 dark:text-slate-400">Shorts</h2>
+                <h6 class="text-sm mb-2 inline-block">Lorem ipsum dolor sit, amet consectetur. binas yana dnd</h6>
                 <UBadge size="lg" label="99.000" color="yellow" variant="outline" class="font-semibold"/>
             </div>
             <div class="pb-3 flex items-center space-x-1">
