@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const isOpen = ref(false);
+const visibleSearch = ref(false)
+const route = useRoute()
+watchEffect(() => {
+  route.name === 'index' ? visibleSearch.value = true : visibleSearch.value = false
+})
 </script>
 <template>
   <section
@@ -14,6 +19,7 @@ const isOpen = ref(false);
         </h2>
       </NuxtLink>
       <UInput
+      v-if="visibleSearch"
         icon="i-heroicons-magnifying-glass-20-solid"
         size="sm"
         color="blue"
