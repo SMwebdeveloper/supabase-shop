@@ -1,14 +1,16 @@
 <script setup lang="ts">
 const isOpen = ref(false);
-const visibleSearch = ref(false)
-const route = useRoute()
+const visibleSearch = ref(false);
+const route = useRoute();
 watchEffect(() => {
-  route.name === 'index' ? visibleSearch.value = true : visibleSearch.value = false
-})
+  route.name === "index"
+    ? (visibleSearch.value = true)
+    : (visibleSearch.value = false);
+});
 </script>
 <template>
   <section
-    class="py-5 border-b-2 border-gray-400 dark:border-gray-50 dark:bg-sky-950"
+    class="py-5 border-b-2 border-gray-400 dark:border-gray-50 dark:bg-slate-900"
   >
     <div
       class="max-w-[1200px] w-full mx-auto px-6 lg:px-0 flex items-center justify-between"
@@ -19,7 +21,7 @@ watchEffect(() => {
         </h2>
       </NuxtLink>
       <UInput
-      v-if="visibleSearch"
+        v-if="visibleSearch"
         icon="i-heroicons-magnifying-glass-20-solid"
         size="sm"
         color="blue"

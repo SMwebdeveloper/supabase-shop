@@ -12,50 +12,31 @@ const items = [
 <template>
   <section>
     <div class="max-w-[1200px] w-full mx-auto px-6 lg:px-0 pt-5">
-      <h2
-        class="text-4xl dark:text-slate-200 text-slate-800 font-semibold mb-4"
-      >
-        Shoes
-      </h2>
-      <div>
-        <UCarousel
-          :items="items"
-          :ui="{
-            item: 'basis-full',
-            container: 'rounded-lg',
-            indicators: {
-              wrapper: 'relative bottom-0 mt-4',
-            },
-          }"
-          :prev-button="{
-            color: 'gray',
-            icon: 'i-heroicons-arrow-left-20-solid',
-            class: '-left-12',
-          }"
-          :next-button="{
-            color: 'gray',
-            icon: 'i-heroicons-arrow-right-20-solid',
-            class: '-right-12',
-          }"
-          class="w-64 mx-auto rounded-lg"
-          arrows
-          indicators
-        >
-          <template #default="{ item }">
-            <img :src="item" class="w-full" draggable="false" />
-          </template>
-
-          <template #indicator="{ onClick, page, active }">
-            <UButton
-              :variant="active ? 'solid' : 'outline'"
-              size="2xs"
-              class="rounded-full min-w-6 justify-center"
-              @click="onClick(page)"
+      <div class="flex items-start justify-between">
+        <SharedCarousel :items="items" class="w-[25%]" />
+        <div class="w-[70%]">
+          <h2
+            class="text-4xl dark:text-slate-200 text-slate-800 font-semibold mb-4"
+          >
+            Shoes
+          </h2>
+          <h6 class="text-slate-800 dark:text-slate-200 text-lg">
+            Vendor: Kimdir
+          </h6>
+          <h6 class="text-slate-800 dark:text-slate-200 text-lg">
+            Deliver: 1 day
+          </h6>
+          <div class="pt-3">
+            <h5 class="text-slate-800 dark:text-slate-200 text-md">Count:</h5>
+            <div
+              class="border border-gray-800 w-24 p-2 flex items-center justify-around"
             >
-            <img :src="item" alt="" class="w-8 h-8">
-        </UButton>
-          </template>
-        </UCarousel>
+              <button class="text-md">-</button>
+              <span class="inline-block text-md">1</span>
+              <button><UIcon name="i-heroicons-plus-20-solid" size=/></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
