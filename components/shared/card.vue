@@ -11,7 +11,7 @@
           class="w-full h-[200px] md:h-[300px] rounded-t-lg object-cover"
         />
       </header>
-      <div class="py-3">
+      <div class="py-3 px-2">
         <h2 class="text-2xl font-semibold text-slate-800 dark:text-slate-400">
           Shorts
         </h2>
@@ -26,7 +26,7 @@
           class="font-semibold"
         />
       </div>
-      <div class="pb-3 flex items-center space-x-1">
+      <div class="pb-3 px-2 flex items-center space-x-1">
         <UButton color="blue" size="lg" class="w-[48%] text-center" block
           >Buy</UButton
         >

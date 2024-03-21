@@ -8,7 +8,7 @@ const products = [{
 </script>
 <template>
     <section class="w-full">
-        <h2 class="text-3xl text-slate-200 font-semibold mb-4">My products</h2>
+        <h2 class="text-3xl dark:text-slate-200 text-slate-800 font-semibold mb-4">My products</h2>
         <div class="space-x-2">
         <!-- <UButton color="blue" variant="soft" label="Active"/>
         <UButton color="blue" variant="soft" label="Sold out"/> -->
