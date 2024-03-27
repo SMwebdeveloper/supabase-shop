@@ -1,37 +1,42 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { supabase } from "~/libs/supabase";
+
 useHead({ title: "Supabase-shop | Auth" });
+
+const router = useRouter()
 const registerPage = ref(false);
 const state = reactive({
-  email: undefined,
+  email: '',
   name: undefined,
   lastName: undefined,
-  password: undefined,
+  password: '',
 });
 
-
-async function onSubmit(event: FormSubmitEvent<any>) {
+const  onSubmit = async (event: FormSubmitEvent<any>) => {
   if (!registerPage.value) {
-    if (state.email && state.name && state.lastName && state.password) {
-      await supabase.auth.signUp({
-        email: state.email,
-        // name: `${state.name} ${state.lastName}`,
-        password: state.password
-      })
-    }
+    await supabase.auth.signUp({
+      email: state.email,
+      // name: `${state.name} ${state.lastName}`,
+      password: state.password,
+    }).then(() => {
+      router.push('/')
+    }).catch((error) => {
+      console.log(error)
+    })
+    
   } else {
-    if (state.email && state.password) { 
-      await supabase.auth.signInWithPassword({
-        email: state.email,
-        password: state.password
-      }).then((data) => {
-        console.log(data)
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: state.email,
+      password: state.password,
+    }).then(() => {
+      router.push('/')
+    })
+
+    console.log(error)
+    console.log(data)
   }
+ 
 }
 </script>
 
