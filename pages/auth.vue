@@ -15,15 +15,14 @@ const state = reactive({
 
 const  onSubmit = async (event: FormSubmitEvent<any>) => {
   if (!registerPage.value) {
-    await supabase.auth.signUp({
+    const {data, error} = await supabase.auth.signUp({
       email: state.email,
       // name: `${state.name} ${state.lastName}`,
       password: state.password,
-    }).then(() => {
-      router.push('/')
-    }).catch((error) => {
-      console.log(error)
     })
+
+    console.log(data)
+    console.log(error)
     
   } else {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -67,29 +66,7 @@ const  onSubmit = async (event: FormSubmitEvent<any>) => {
           />
         </h4>
       </div>
-      <UForm
-        ref="form"
-        :state="state"
-        @submit="onSubmit"
-        class="w-[300px] mx-auto bg-slate-200 dark:bg-cyan-800 p-5 rounded-lg shadow-lg space-y-2"
-      >
-        <UFormGroup label="Email" name="email">
-          <UInput v-model="state.email" />
-        </UFormGroup>
-
-        <UFormGroup v-if="!registerPage" label="Name" name="text">
-          <UInput v-model="state.name" />
-        </UFormGroup>
-        <UFormGroup v-if="!registerPage" label="Last name" name="text">
-          <UInput v-model="state.lastName" />
-        </UFormGroup>
-
-        <UFormGroup label="Password" name="password">
-          <UInput v-model="state.password" type="password" />
-        </UFormGroup>
-
-        <UButton color="blue" :loading="false" type="submit"> Submit </UButton>
-      </UForm>
+      <AuthRegister/>
     </div>
   </section>
 </template>

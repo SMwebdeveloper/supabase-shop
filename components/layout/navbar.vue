@@ -74,7 +74,6 @@ watchEffect(() => {
             </div>
           </template>
 
-          <Placeholder class="h-full" />
           <div class="flex flex-col items-start justify-center space-y-2">
             <SharedColorMode />
             <NuxtLink to="/profile" @click="isOpen = false">
