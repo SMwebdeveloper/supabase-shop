@@ -40,7 +40,7 @@ const  onSubmit = async (event: FormSubmitEvent<any>) => {
 </script>
 
 <template>
-  <section class="h-[80vh]">
+  <section class="min-h-[80vh] pt-10">
     <div
       class="max-w-[1200px] w-full mx-auto px-6 flex flex-col items-center justify-center h-full space-y-4"
     >
@@ -66,7 +66,8 @@ const  onSubmit = async (event: FormSubmitEvent<any>) => {
           />
         </h4>
       </div>
-      <AuthRegister/>
+      <AuthLogin v-if="registerPage"/>
+      <AuthRegister v-else/>
     </div>
   </section>
 </template>

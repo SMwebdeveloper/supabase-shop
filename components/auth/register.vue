@@ -1,34 +1,56 @@
 <script setup lang="ts">
-import { supabase } from '~/libs/supabase';
-import type { FormError } from '#ui/types'
-
-const validate = (state: any): FormError[] => {
-	const errors = []
-	if (!state.name) errors.push({ path: 'name', message: 'Name is required' })
-	if (!state.email) errors.push({ path: 'email', message: 'Email is required' })
-	if (!state.password)
-		errors.push({ path: 'password', message: 'Password is required' })
-	return errors
-}
-
+import { supabase } from "~/libs/supabase";
+import type { FormError } from "#ui/types";
 const state = ref({
   email: "",
   name: "",
   lastName: "",
   password: "",
 });
+const visibleAlert = ref({
+  errorMes: false,
+  doneMes: false,
+});
+const alertMessage = ref("");
+
+const validate = (state: any): FormError[] => {
+  const errors = [];
+  if (!state.name) errors.push({ path: "name", message: "Name is required" });
+  if (!state.lastName)
+    errors.push({ path: "lastName", message: "Last name is required" });
+  if (!state.email)
+    errors.push({ path: "email", message: "Email is required" });
+  if (!state.password)
+    errors.push({ path: "password", message: "Password is required" });
+  return errors;
+};
+
 const onSubmit = async () => {
-    try {
-        const { data, error } = await supabase.auth.signUp({
-            email: state.value.email,
-            password: state.value.password
-        })
-        console.log(data)
-        if(error) throw new Error('email missing')
-    } catch (error:any) {
-      console.log(error.message)
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: state.value.email,
+      password: state.value.password,
+    });
+
+    if (data.user) {
+      visibleAlert.value.doneMes = true;
+      alertMessage.value =
+        "We have sent a message to your email to verify your profile, please confirm the message.";
+    } else {
     }
-}
+    if (error) throw new Error("email or password missing");
+  } catch (error: any) {
+    visibleAlert.value.errorMes = true;
+    alertMessage.value = error.message;
+  }
+  if (visibleAlert.value.doneMes || visibleAlert.value.errorMes) {
+    setInterval(() => {
+      visibleAlert.value.doneMes = false;
+      visibleAlert.value.errorMes = false;
+    }, 4000);
+  }
+};
+
 </script>
 <template>
   <UForm
@@ -38,14 +60,28 @@ const onSubmit = async () => {
     @submit="onSubmit"
     class="w-[300px] mx-auto bg-slate-200 dark:bg-cyan-800 p-5 rounded-lg shadow-lg space-y-2"
   >
+    <UAlert
+      color="sky"
+      variant="subtle"
+      icon="i-heroicons-command-line"
+      v-if="visibleAlert.doneMes"
+      :description="alertMessage"
+    />
+    <UAlert
+      color="red"
+      variant="subtle"
+      icon="i-heroicons-command-line"
+      v-if="visibleAlert.errorMes"
+      :description="alertMessage"
+    />
     <UFormGroup label="Email" name="email">
       <UInput v-model="state.email" />
     </UFormGroup>
 
-    <UFormGroup label="Name" name="text">
+    <UFormGroup label="Name" name="name">
       <UInput v-model="state.name" />
     </UFormGroup>
-    <UFormGroup label="Last name" name="text">
+    <UFormGroup label="Last name" name="lastName">
       <UInput v-model="state.lastName" />
     </UFormGroup>
 
