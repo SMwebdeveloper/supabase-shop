@@ -2,6 +2,8 @@
 import { supabase } from "~/libs/supabase";
 import type { FormError } from "#ui/types";
 
+const toast = useToast();
+const router = useRouter()
 const state = ref({
   email: "",
   password: "",
@@ -24,16 +26,23 @@ const onSubmit = async () => {
       email: state.value.email,
       password: state.value.password,
     });
-    console.log(error)
-      if (error) throw new Error(error.message)
-  } catch (error:any) {
-    visibleAlert.value = true
-    alertMessage.value = error.message
+    if (error) {
+      throw new Error(error.message);
+    } else {
+        toast.add({
+            title: 'Logged in',
+			description: 'You are now logged'
+        })
+       await  router.push('/')
+    }
+  } catch (error: any) {
+    visibleAlert.value = true;
+    alertMessage.value = error.message;
   }
-    if (visibleAlert.value) {
-        setInterval(() => {
-        visibleAlert.value = false
-    }, 4000)
+  if (visibleAlert.value) {
+    setInterval(() => {
+      visibleAlert.value = false;
+    }, 4000);
   }
 };
 </script>
@@ -46,7 +55,6 @@ const onSubmit = async () => {
     @submit="onSubmit"
     class="w-[300px] mx-auto bg-slate-200 dark:bg-cyan-800 p-5 rounded-lg shadow-lg space-y-2"
   >
-    
     <UAlert
       color="red"
       variant="subtle"
