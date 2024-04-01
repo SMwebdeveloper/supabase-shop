@@ -3,7 +3,7 @@ import { supabase } from "~/libs/supabase";
 import type { FormError } from "#ui/types";
 const state = ref({
   email: "",
-  name: "",
+  firstName: "",
   lastName: "",
   password: "",
 });
@@ -15,7 +15,8 @@ const alertMessage = ref("");
 
 const validate = (state: any): FormError[] => {
   const errors = [];
-  if (!state.name) errors.push({ path: "name", message: "Name is required" });
+  if (!state.firstName)
+    errors.push({ path: "name", message: "Name is required" });
   if (!state.lastName)
     errors.push({ path: "lastName", message: "Last name is required" });
   if (!state.email)
@@ -30,12 +31,22 @@ const onSubmit = async () => {
     const { data, error } = await supabase.auth.signUp({
       email: state.value.email,
       password: state.value.password,
+      options: {
+        first_name: state.value.firstName,
+        last_name: state.value.lastName,
+      },
     });
 
     if (data.user) {
       visibleAlert.value.doneMes = true;
       alertMessage.value =
         "We have sent a message to your email to verify your profile, please confirm the message.";
+      await supabase.from("users").insert({
+        email: state.value.email,
+        first_name: state.value.firstName,
+          last_name: state.value.lastName,
+        
+      });
     } else {
     }
     if (error) throw new Error("email or password missing");
@@ -50,7 +61,6 @@ const onSubmit = async () => {
     }, 4000);
   }
 };
-
 </script>
 <template>
   <UForm
@@ -79,7 +89,7 @@ const onSubmit = async () => {
     </UFormGroup>
 
     <UFormGroup label="Name" name="name">
-      <UInput v-model="state.name" />
+      <UInput v-model="state.firstName" />
     </UFormGroup>
     <UFormGroup label="Last name" name="lastName">
       <UInput v-model="state.lastName" />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { supabase } from '~/libs/supabase';
 const isOpen = ref(false);
 const visibleSearch = ref(false);
 const route = useRoute();
@@ -7,6 +8,9 @@ watchEffect(() => {
     ? (visibleSearch.value = true)
     : (visibleSearch.value = false);
 });
+const logOut = async () => {
+  supabase.auth.signOut()
+}
 </script>
 <template>
   <section
@@ -35,6 +39,7 @@ watchEffect(() => {
         <NuxtLink to="/auth">
           <UButton color="blue" variant="solid" label="Register" />
         </NuxtLink>
+        <UButton color="blue" variant="solid" label="Log out" @click="logOut"/>
       </div>
       <UButton
         color="gray"

@@ -6,16 +6,18 @@ const handleClick = (e: any) => {
   // selected.value = e;
   // console.log(selected.value);
 };
+const token:any = ref('')
 onMounted(async () => {
-  const { data } = supabase.auth.onAuthStateChange((event, session) => {
-    console.log(event, session);
 
+  const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session)
+    token.value = session.access_token
     if (event === "INITIAL_SESSION") {
       // handle initial session
     } else if (event === "SIGNED_IN") {
       // handle sign in event
     } else if (event === "SIGNED_OUT") {
-      // handle sign out event
+      // handle sign out event 
     } else if (event === "PASSWORD_RECOVERY") {
       // handle password recovery event
     } else if (event === "TOKEN_REFRESHED") {
@@ -24,7 +26,9 @@ onMounted(async () => {
       // handle user updated event
     }
   });
-  console.log(data)
+  const {data: {user}, error} = await supabase.auth.getUser(token.value)
+
+  console.log(user)
 });
 </script>
 
